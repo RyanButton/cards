@@ -17,6 +17,6 @@ const Container = styled.div`
   color: white;
 `;
 
-export default function Card({ message }) {
+export function Card({ message }) {
   return <Container>{message}</Container>;
 }
