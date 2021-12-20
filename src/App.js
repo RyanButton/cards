@@ -32,19 +32,25 @@ Container.displayName = "Container";
 const cardsInit = [];
 
 function App() {
-  const [cards, AddCard] = useState(cardsInit);
+  const [cards, setCards] = useState(cardsInit);
+  const [cardNo, setCardNo] = useState(1);
   const [addingNewCard, setAddingNewCard] = useState(false);
 
   const addCard = (message) => {
-    cards.push({ message: message });
+    setCardNo(() => cardNo + 1);
+    cards.push({ id: cardNo, message: message });
     return [...cards];
   };
   const handleSubmit = (event) => {
-    AddCard(addCard(event.target[0].value));
+    setCards(addCard(event.target[0].value));
     setAddingNewCard(false);
   };
 
-  function Input() {
+  const deleteCard = (id) => {
+    setCards(cards.filter((card) => card.id !== id));
+  };
+
+  const Input = () => {
     return (
       <form onSubmit={handleSubmit}>
         <label>
@@ -54,13 +60,14 @@ function App() {
         <input type="submit" value="Submit" />
       </form>
     );
-  }
+  };
+
   return (
     <>
       <Header />
       <CardContainer>
         {cards.map((card) => (
-          <Card message={card.message} />
+          <Card id={card.id} message={card.message} deleteCard={deleteCard} />
         ))}
 
         <Container>
