@@ -1,7 +1,7 @@
 import * as React from "react";
 import styled from "styled-components";
 
-const WIDTH_HEIGHT = "100px";
+const WIDTH_HEIGHT = "120px";
 
 const Container = styled.div`
   display: flex;

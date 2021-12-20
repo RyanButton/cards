@@ -1,17 +1,19 @@
 import { Card } from "./components/Card";
 import Header from "./layout/Header";
 import styled from "styled-components";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 
 const CardContainer = styled.div`
   display: flexbox;
   flex-wrap: wrap;
   justify-content: center;
   align-items: center;
-  margin: 50px;
+  margin-left: 150px;
+  margin-right: 150px;
 `;
+CardContainer.displayName = "CardContainer";
 
-const WIDTH_HEIGHT = "100px";
+const WIDTH_HEIGHT = "120px";
 const Container = styled.div`
   display: flex;
   justify-content: center;
@@ -25,26 +27,34 @@ const Container = styled.div`
   max-height: ${WIDTH_HEIGHT};
   color: white;
 `;
-CardContainer.displayName = "CardContainer";
+Container.displayName = "Container";
 
-const cardsInit = [
-  { key: 1, message: "hello" },
-  { key: 2, message: "G'DAY" },
-  { key: 3, message: "fush n chups" },
-  { key: 4, message: "eetswa" },
-  { key: 5, message: "fubbernut" },
-  { key: 6, message: "hellod" },
-];
+const cardsInit = [];
 
 function App() {
-  const [cards = cardsInit, AddCard] = useState();
+  const [cards, AddCard] = useState(cardsInit);
+  const [addingNewCard, setAddingNewCard] = useState(false);
 
   const addCard = (message) => {
-    cards.push({ key: new Date().getMilliseconds(), message: message });
-    console.log(cards);
+    cards.push({ message: message });
     return [...cards];
   };
+  const handleSubmit = (event) => {
+    AddCard(addCard(event.target[0].value));
+    setAddingNewCard(false);
+  };
 
+  function Input() {
+    return (
+      <form onSubmit={handleSubmit}>
+        <label>
+          Card text:
+          <input type="text" name="card-text" autocomplete="off" />
+        </label>
+        <input type="submit" value="Submit" />
+      </form>
+    );
+  }
   return (
     <>
       <Header />
@@ -54,7 +64,10 @@ function App() {
         ))}
 
         <Container>
-          <button onClick={() => AddCard(addCard("message"))}>+</button>
+          {!addingNewCard && (
+            <button onClick={() => setAddingNewCard(true)}>+</button>
+          )}
+          {addingNewCard && <Input />}
         </Container>
       </CardContainer>
     </>
