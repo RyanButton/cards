@@ -4,9 +4,20 @@ import styled from "styled-components";
 
 const CardContainer = styled.div`
   display: flexbox;
+  flex-wrap: wrap;
   justify-content: center;
   align-items: center;
+  margin: 50px;
 `;
+
+const cards = [
+  { message: "hello" },
+  { message: "G'DAY" },
+  { message: "fush n chups" },
+  { message: "eetswa" },
+  { message: "fubbernut" },
+  { message: "hello" },
+];
 
 CardContainer.displayName = "CardContainer";
 function App() {
@@ -14,9 +25,9 @@ function App() {
     <>
       <Header />
       <CardContainer>
-        <Card message="hello" />
-        <Card message="hi" />
-        <Card message="gday" />
+        {cards.map((card) => (
+          <Card message={card.message} />
+        ))}
       </CardContainer>
     </>
   );
